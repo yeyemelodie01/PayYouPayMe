@@ -18,15 +18,9 @@ public class Message {
     private int id;
 
     private String content;
+
     private LocalDate date;
 
     @ManyToOne
     private Utilisateur utilisateur;
-
-    public Message(String content, LocalDate date, Utilisateur utilisateur) {
-        this.content = content;
-        this.date = date;
-        this.utilisateur = utilisateur;
-    }
-
 }
