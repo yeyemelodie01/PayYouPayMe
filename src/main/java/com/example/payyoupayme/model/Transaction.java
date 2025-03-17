@@ -26,4 +26,12 @@ public class Transaction {
 
     @ManyToOne
     private Utilisateur receiver;
+
+    public Transaction(Float amount, LocalDate date, String messageContent, Utilisateur sender, Utilisateur receiver) {
+        this.amount = amount;
+        this.date = date;
+        this.messageContent = messageContent;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,4 +42,14 @@ public class Utilisateur {
 
     @ManyToMany
     private List<Utilisateur> contact;
+
+    public Utilisateur(String firstName, String lastName, String email, String iban, Float balance, String login, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.iban = iban;
+        this.balance = balance;
+        this.login = login;
+        this.password = password;
+    }
 }

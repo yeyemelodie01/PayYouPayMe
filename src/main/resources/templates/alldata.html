@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Admin dashboard</h1>
+
+    <h2>Utilisateurs</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Email</th>
+            <th>Iban</th>
+            <th>Balance</th>
+            <th>Login</th>
+            <th>Password</th>
+        </tr>
+        <tr th:each="user : ${utilisateurs}">
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+        </tr>
+    </table>
+
+    <h2>Toutes les transactions</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Sender</th>
+            <th>Receiver</th>
+        </tr>
+        <tr th:each="transac : ${transactions}">
+            <td th:text="${transac.id}"></td>
+            <td th:text="${transac.amount}"></td>
+            <td th:text="${transac.date}"></td>
+            <td th:text="${transac.sender.firstName}"></td>
+            <td th:text="${transac.receiver.firstName}"></td>
+        </tr>
+    </table>
+
+    <h2>Tout les messages</h2>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>Content</th>
+            <th>Date</th>
+            <th>Utilisateur name</th>
+        </tr>
+        <tr th:each="element : ${messages}">
+            <td th:text="${element.id}"></td>
+            <td th:text="${element.content}"></td>
+            <td th:text="${element.date}"></td>
+            <td th:text="${element.utilisateur}"></td>
+        </tr>
+    </table>
+</body>
+</html>
