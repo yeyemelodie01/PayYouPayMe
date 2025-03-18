@@ -23,7 +23,7 @@ public class DataInitializer {
             Utilisateur u1 = new Utilisateur();
             u1.setFirstName("firstNameU1");
             u1.setLastName("LastNameU1");
-            u1.setUsername("user");
+            u1.setUsername("usertest");
             //	u1.setPassword(passwordEncoder.encode("user"));
             u1.setBalance(30f);
             utilisateurRepository.save(u1);
@@ -31,7 +31,7 @@ public class DataInitializer {
             Utilisateur u2 = new Utilisateur();
             u2.setFirstName("firstNameU2");
             u2.setLastName("LastNameU2");
-            u2.setUsername("user");
+            u2.setUsername("usertest2");
             //	u2.setPassword(passwordEncoder.encode("user"));
             u2.setBalance(20f);
             utilisateurRepository.save(u2);
@@ -42,8 +42,12 @@ public class DataInitializer {
             transactionRepository.save(t1);
 
             Message m1 = new Message("message 1", LocalDate.now());
-            m1.setUtilisateur(u2);
+            m1.setUtilisateur(u1);
             messageRepository.save(m1);
+
+            Message m2 = new Message("message 1", LocalDate.now());
+            m2.setUtilisateur(u2);
+            messageRepository.save(m2);
         };
     }
 }

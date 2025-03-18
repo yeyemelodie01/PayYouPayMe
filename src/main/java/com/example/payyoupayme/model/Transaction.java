@@ -40,4 +40,9 @@ public class Transaction {
         this.sender = sender;
         this.receiver = receiver;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{}";
+    }
 }

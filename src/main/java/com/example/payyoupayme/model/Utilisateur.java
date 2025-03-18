@@ -33,13 +33,13 @@ public class Utilisateur {
     private String login;
     private String password;
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Transaction> transactionSent;
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     private List<Transaction> transactionReceived;
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "utilisateur", fetch = FetchType.LAZY)
     private List<Message> messageSent;
 
     @ManyToMany
@@ -58,5 +58,10 @@ public class Utilisateur {
         this.transactionReceived = transactionReceived;
         this.messageSent = messageSent;
         this.contact = contact;
+    }
+
+    @Override
+    public String toString() {
+        return "Utilisateur{}";
     }
 }
