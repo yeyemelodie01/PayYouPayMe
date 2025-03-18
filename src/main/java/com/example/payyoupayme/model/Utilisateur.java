@@ -18,9 +18,11 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String firstName;
+    private String username;
 
     private String lastName;
+
+    private String firstName;
 
     private String email;
 
@@ -43,13 +45,18 @@ public class Utilisateur {
     @ManyToMany
     private List<Utilisateur> contact;
 
-    public Utilisateur(String firstName, String lastName, String email, String iban, Float balance, String login, String password) {
-        this.firstName = firstName;
+    public Utilisateur(String username, String lastName, String firstName, String email, String iban, Float balance, String login, String password, List<Transaction> transactionSent, List<Transaction> transactionReceived, List<Message> messageSent, List<Utilisateur> contact) {
+        this.username = username;
         this.lastName = lastName;
+        this.firstName = firstName;
         this.email = email;
         this.iban = iban;
         this.balance = balance;
         this.login = login;
         this.password = password;
+        this.transactionSent = transactionSent;
+        this.transactionReceived = transactionReceived;
+        this.messageSent = messageSent;
+        this.contact = contact;
     }
 }

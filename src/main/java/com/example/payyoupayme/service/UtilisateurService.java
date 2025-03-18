@@ -12,7 +12,6 @@ public class UtilisateurService {
 
     public UtilisateurService(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
-        this.utilisateurRepository.save(new Utilisateur("Test1", "Test", "test@gmail.com", "123456", 78.52f, "test", "test"));
     }
 
     public List<Utilisateur> getAllUtilisateur() { return utilisateurRepository.findAll(); }

@@ -18,8 +18,8 @@ public class Transaction {
     private int id;
 
     private Float amount;
-    private LocalDate date;
     private String messageContent;
+    private LocalDate date;
 
     @ManyToOne
     private Utilisateur sender;
@@ -27,10 +27,16 @@ public class Transaction {
     @ManyToOne
     private Utilisateur receiver;
 
-    public Transaction(Float amount, LocalDate date, String messageContent, Utilisateur sender, Utilisateur receiver) {
+    public Transaction(Float amount, String messageContent, LocalDate date) {
         this.amount = amount;
-        this.date = date;
         this.messageContent = messageContent;
+        this.date = date;
+    }
+
+    public Transaction(Float amount, String messageContent, LocalDate date, Utilisateur sender, Utilisateur receiver) {
+        this.amount = amount;
+        this.messageContent = messageContent;
+        this.date = date;
         this.sender = sender;
         this.receiver = receiver;
     }

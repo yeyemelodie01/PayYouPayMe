@@ -8,7 +8,6 @@ public class PayYouPayMeApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PayYouPayMeApplication.class, args);
-        Data data = new Data();
     }
 
 }
