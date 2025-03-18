@@ -16,11 +16,4 @@ public class TransactionController {
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
-
-    @GetMapping("/me/user")
-    public String getCurrentUser(Model model) {
-        Utilisateur utilisateur = transactionService.getCurrentUser();
-        model.addAttribute("utilisateur", utilisateur);
-        return "transaction";
-    }
 }

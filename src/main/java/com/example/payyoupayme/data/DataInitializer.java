@@ -24,6 +24,9 @@ public class DataInitializer {
             u1.setFirstName("firstNameU1");
             u1.setLastName("LastNameU1");
             u1.setUsername("usertest");
+            u1.setEmail("usertest@gmail.com");
+            u1.setIban("123456789");
+            u1.setLogin("usertest");
             //	u1.setPassword(passwordEncoder.encode("user"));
             u1.setBalance(30f);
             utilisateurRepository.save(u1);
@@ -32,14 +35,26 @@ public class DataInitializer {
             u2.setFirstName("firstNameU2");
             u2.setLastName("LastNameU2");
             u2.setUsername("usertest2");
+            u2.setEmail("usertest2@gmail.com");
+            u2.setIban("12345678910");
+            u2.setLogin("usertest2");
             //	u2.setPassword(passwordEncoder.encode("user"));
             u2.setBalance(20f);
             utilisateurRepository.save(u2);
+
+            u1.getContact().add(u2);
+            utilisateurRepository.save(u1);
+
 
             Transaction t1 = new Transaction(20f, "pour les courses", LocalDate.now());
             t1.setSender(u1);
             t1.setReceiver(u2);
             transactionRepository.save(t1);
+
+            Transaction t2 = new Transaction(1000f, "remboursement", LocalDate.now());
+            t2.setSender(u2);
+            t2.setReceiver(u1);
+            transactionRepository.save(t2);
 
             Message m1 = new Message("message 1", LocalDate.now());
             m1.setUtilisateur(u1);

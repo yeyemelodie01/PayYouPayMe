@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 public class AuthentificationService {
 
     /**
-     * Récupère le nom d'utilisateur actuellement connecté
-     * @return Le nom d'utilisateur (login) ou null si aucun utilisateur n'est connecté
+     * Récupère le nom d'userToDisplay actuellement connecté
+     * @return Le nom d'userToDisplay (login) ou null si aucun userToDisplay n'est connecté
      */
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
