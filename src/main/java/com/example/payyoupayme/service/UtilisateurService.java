@@ -40,12 +40,9 @@ public class UtilisateurService {
         Utilisateur existingUser = utilisateurRepository.findById(utilisateur.getId())
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-        existingUser.setUsername(utilisateur.getUsername());
         existingUser.setFirstName(utilisateur.getFirstName());
         existingUser.setLastName(utilisateur.getLastName());
         existingUser.setEmail(utilisateur.getEmail());
-        existingUser.setIban(utilisateur.getIban());
-        existingUser.setBalance(utilisateur.getBalance());
 
         utilisateurRepository.save(existingUser);
     }

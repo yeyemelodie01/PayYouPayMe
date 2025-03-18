@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/utilisateur")
+@RequestMapping("/me/user")
 public class UtilisateurController {
 
     private final UtilisateurService utilisateurService;
@@ -16,7 +16,7 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
-    @GetMapping("/me/user")
+    @GetMapping("/")
     public String getCurrentUser(Model model) {
         Utilisateur utilisateur = utilisateurService.getCurrentUser();
         model.addAttribute("userToDisplay", utilisateur);
