@@ -42,6 +42,17 @@ public class DataInitializer {
             u2.setBalance(20f);
             utilisateurRepository.save(u2);
 
+            Utilisateur u3 = new Utilisateur();
+            u3.setFirstName("firstNameU3");
+            u3.setLastName("LastNameU3");
+            u3.setUsername("usertest3");
+            u3.setEmail("usertest2@gmail.com");
+            u3.setIban("12345678910");
+            u3.setLogin("usertest3");
+            //	u2.setPassword(passwordEncoder.encode("user"));
+            u3.setBalance(20f);
+            utilisateurRepository.save(u3);
+
             u1.getContact().add(u2);
             utilisateurRepository.save(u1);
 

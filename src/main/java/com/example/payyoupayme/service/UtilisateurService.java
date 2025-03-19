@@ -20,7 +20,7 @@ public class UtilisateurService {
     public List<Utilisateur> getAllUtilisateur() { return utilisateurRepository.findAll(); }
 
     public Optional<Utilisateur> findByLogin(String username) {
-        return utilisateurRepository.findByLogin(username);
+        return utilisateurRepository.findByUsername(username);
     }
 
     public Optional<Utilisateur> findById(Integer userId) {
@@ -54,5 +54,28 @@ public class UtilisateurService {
             currentUser.getContact().add(contact.get()); //alors on ajoute dans la liste de nouveau contact
             utilisateurRepository.save(currentUser); //on enreggistre les modification ddans la bdd
         }
+    }
+
+    public Utilisateur getUserByUsername(String username) {
+        return utilisateurRepository.findByUsername(username).orElse(null);
+    }
+
+    public void addUserToContactList(String username) {
+        Utilisateur userConnected = getCurrentUser(); //récupère l'utilisateur connecter
+        Utilisateur userToAdd = getUserByUsername(username); //récupère l'utilisateur rechercher
+        if (userToAdd != null && userToAdd != userConnected && !userConnected.getContact().contains(userToAdd)) { //si la liste de contact existe et si dans la liste l'user rentrer n'est pas présent
+            userConnected.getContact().add(userToAdd); //alors on ajoute dans la liste de nouveau contact
+            utilisateurRepository.save(userConnected);
+        }
+    }
+
+    public void deleteContactById(int id) {
+        Utilisateur userConnected = getCurrentUser();
+        Utilisateur contactToDelete = utilisateurRepository.findById(id).orElse(null);
+
+        if (contactToDelete != null){
+            userConnected.getContact().remove(contactToDelete);
+        }
+        utilisateurRepository.save(userConnected);
     }
 }
