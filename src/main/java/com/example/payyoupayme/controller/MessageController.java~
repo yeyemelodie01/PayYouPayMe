@@ -25,7 +25,7 @@ public class MessageController {
     public String getMessage(Model model) {
         model.addAttribute("messages", messageService.getAllMessage());
         model.addAttribute("userConnected", utilisateurService.getCurrentUser());
-
+        
         return "message";
     }
 

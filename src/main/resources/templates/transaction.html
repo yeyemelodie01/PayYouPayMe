@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head">
+    <meta charset="UTF-8">
+    <title>Transaction</title>
+</head>
+<body>
+    <header th:replace="fragments/menu :: header"></header>
+    <h1 class="text-3xl font-bold text-center">Transaction</h1>
+
+    <main class="m-4">
+        <p th:text="'Solde : ' +${userConnected.balance}"></p>
+        <div>
+            <table class="border-collapse border border-gray-400">
+                <tr>
+                    <th class="border border-gray-300 p-4">Id</th>
+                    <th class="border border-gray-300 p-4">Amount</th>
+                    <th class="border border-gray-300 p-4">Message</th>
+                    <th class="border border-gray-300 p-4">Date</th>
+                    <th class="border border-gray-300 p-4">Receiver</th>
+                </tr>
+                <tr th:each="transaction : ${userConnected.transactionSent}">
+                    <td th:text="${transaction.id}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${transaction.amount}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${transaction.messageContent}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${transaction.date}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${transaction.receiver.lastName}" class="border border-gray-300 p-4"></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <form th:action="@{/transaction/add}" method="POST">
+                <label for="receiver">Receiver:</label>
+                <select name="receiver" id="receiver">
+                    <option th:each="utilisateur : ${userConnected.contact}" th:value="${utilisateur.id}" th:text="${utilisateur.firstName}"></option>
+                </select>
+                <label for="amount">Amount:</label>
+                <input type="number" name="amount" id="amount" placeholder="Entrez le montant de la transaction"/>
+                <p th:text="${error}" class="text-red-500"></p>
+                <label for="message">Message:</label>
+                <input type="text" name="message" id="message" placeholder="Entrez le message de la transaction"/>
+                <input type="submit" value="Add"/>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>
