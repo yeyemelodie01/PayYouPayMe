@@ -1,20 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head th:replace="fragments/head :: head">
   <meta charset="UTF-8">
   <title>Home</title>
 </head>
 <body>
-  <h1>Bienvenue sur l'application PayYouPayMe</h1>
-  <header>
-    <nav>
-      <ul>
-        <li>
-          <a th:href="@{/login}">Accueil</a>
-          <a th:href="@{/me/user/}">Utilisateur</a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <header th:replace="fragments/menu :: header"></header>
+  <h1 class="text-3xl font-bold text-center">Bienvenue sur l'application PayYouPayMe</h1>
 </body>
 </html>

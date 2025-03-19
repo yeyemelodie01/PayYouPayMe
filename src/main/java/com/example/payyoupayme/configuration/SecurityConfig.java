@@ -28,6 +28,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/")).permitAll() //tout le monde a accès a ce chemin sans être connecter
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults());

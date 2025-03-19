@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head th:replace="fragments/head :: head">
     <meta charset="UTF-8">
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Admin dashboard</h1>
+<header th:replace="fragments/menu :: header"></header>
+    <h1 class="text-3xl font-bold text-center">Admin dashboard</h1>
 
     <h2>Utilisateurs</h2>
     <table>

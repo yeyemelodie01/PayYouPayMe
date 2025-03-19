@@ -46,4 +46,13 @@ public class UtilisateurService {
 
         utilisateurRepository.save(existingUser);
     }
+
+    public void checkContact(String username) {
+        Utilisateur currentUser = getCurrentUser(); //récupère l'utilisateur connecter
+        Optional<Utilisateur> contact = utilisateurRepository.findByUsername(username); //récupère l'utilisateur rechercher
+        if (contact.isPresent() && !currentUser.getContact().contains(contact.get())) { //si la liste de contact existe et si dans la liste l'user rentrer n'est pas présent
+            currentUser.getContact().add(contact.get()); //alors on ajoute dans la liste de nouveau contact
+            utilisateurRepository.save(currentUser); //on enreggistre les modification ddans la bdd
+        }
+    }
 }

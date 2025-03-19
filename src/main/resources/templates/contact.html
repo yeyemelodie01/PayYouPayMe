@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head">
+    <meta charset="UTF-8">
+    <title>Contact</title>
+</head>
+<body>
+<header th:replace="fragments/menu :: header"></header>
+    <h1 class="text-3xl font-bold text-center">Contact</h1>
+
+    <main class="m-4">
+        <div>
+            <table class="border-collapse border border-gray-400">
+                <tr>
+                    <th class="border border-gray-300 p-4">Id</th>
+                    <th class="border border-gray-300 p-4">FirstName</th>
+                    <th class="border border-gray-300 p-4">LastName</th>
+                    <th class="border border-gray-300 p-4">Email</th>
+                </tr>
+                <tr th:each="contact : ${contactUser}">
+                    <td th:text="${contact.id}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${contact.firstName}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${contact.lastName}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${contact.email}" class="border border-gray-300 p-4"></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-center">Ajouter un contact</h2>
+            <form th:action="@{/contact/add}" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" placeholder="Entrez le nom du contact a ajouter"/>
+                <input type="submit" value="Add"/>
+            </form>
+        </div>
+
+
+
+    </main>
+
+</body>
+</html>
