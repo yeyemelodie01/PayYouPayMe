@@ -1,23 +1,34 @@
 package com.example.payyoupayme.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-     /* @Bean
-    public UserDetailsService userDetailsService(UtilisateurRepository userRepository) {
-        return username -> userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }*/
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers("/admin/**").hasRole("ADMIN");
+            //auth.requestMatchers("/user").hasAnyRole("ADMIN", "USER");
+            auth.requestMatchers("/signup", "/", "/login", "/h2-console/**").permitAll();
+            auth.anyRequest().authenticated();
+        }).formLogin(Customizer.withDefaults()).build();
+    }
+
+   /* @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
@@ -26,11 +37,14 @@ public class SecurityConfig {
                 .headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions.sameOrigin())
                 )
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/")).permitAll() //tout le monde a accès a ce chemin sans être connecter
-                        .anyRequest().authenticated()
-                )
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/")).permitAll(); //tout le monde a accès a ce chemin sans être connecter
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                    auth.requestMatchers("/me/user/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/signup", "/public/**").permitAll();
+                    auth.anyRequest().authenticated();
+                })
                 .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -42,14 +56,17 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }*/
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
- /*   @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
-/*
-    protected void configure(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }*/
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        return authenticationManagerBuilder.build();
+    }
 }

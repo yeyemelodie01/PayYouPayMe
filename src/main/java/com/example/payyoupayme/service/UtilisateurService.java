@@ -78,4 +78,8 @@ public class UtilisateurService {
         }
         utilisateurRepository.save(userConnected);
     }
+
+    public void createUtilisateur(Utilisateur user) {
+        utilisateurRepository.save(user);
+    }
 }

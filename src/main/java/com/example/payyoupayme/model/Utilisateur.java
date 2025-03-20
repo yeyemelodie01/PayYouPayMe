@@ -33,6 +33,8 @@ public class Utilisateur {
     private String login;
     private String password;
 
+    private String role;
+
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Transaction> transactionSent = new ArrayList<Transaction>();
 
@@ -48,7 +50,7 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur", fetch = FetchType.LAZY)
     private List<TransactExterne> transactExterne = new ArrayList<TransactExterne>();
 
-    public Utilisateur(String username, String lastName, String firstName, String email, String iban, Float balance, String login, String password, List<Transaction> transactionSent, List<Transaction> transactionReceived, List<Message> messageSent, List<Utilisateur> contact) {
+    public Utilisateur(String username, String lastName, String firstName, String email, String iban, Float balance, String login, String password, String role, List<Transaction> transactionSent, List<Transaction> transactionReceived, List<Message> messageSent, List<Utilisateur> contact, List<TransactExterne> transactExterne) {
         this.username = username;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -57,10 +59,12 @@ public class Utilisateur {
         this.balance = balance;
         this.login = login;
         this.password = password;
+        this.role = role;
         this.transactionSent = transactionSent;
         this.transactionReceived = transactionReceived;
         this.messageSent = messageSent;
         this.contact = contact;
+        this.transactExterne = transactExterne;
     }
 
     @Override

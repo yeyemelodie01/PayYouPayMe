@@ -9,6 +9,7 @@ import com.example.payyoupayme.repository.UtilisateurRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -18,7 +19,8 @@ public class DataInitializer {
     @Bean
     CommandLineRunner initDatabase(UtilisateurRepository utilisateurRepository,
                                    MessageRepository messageRepository,
-                                   TransactionRepository transactionRepository) {
+                                   TransactionRepository transactionRepository,
+                                   PasswordEncoder passwordEncoder) {
         return args -> {
             Utilisateur u1 = new Utilisateur();
             u1.setFirstName("firstNameU1");
@@ -27,7 +29,8 @@ public class DataInitializer {
             u1.setEmail("usertest@gmail.com");
             u1.setIban("123456789");
             u1.setLogin("usertest");
-            //	u1.setPassword(passwordEncoder.encode("user"));
+            u1.setPassword(passwordEncoder.encode("user"));
+            u1.setRole("ADMIN");
             u1.setBalance(30f);
             utilisateurRepository.save(u1);
 
@@ -38,7 +41,8 @@ public class DataInitializer {
             u2.setEmail("usertest2@gmail.com");
             u2.setIban("12345678910");
             u2.setLogin("usertest2");
-            //	u2.setPassword(passwordEncoder.encode("user"));
+            u2.setPassword(passwordEncoder.encode("user2"));
+            u2.setRole("USER");
             u2.setBalance(20f);
             utilisateurRepository.save(u2);
 
@@ -49,7 +53,8 @@ public class DataInitializer {
             u3.setEmail("usertest2@gmail.com");
             u3.setIban("12345678910");
             u3.setLogin("usertest3");
-            //	u2.setPassword(passwordEncoder.encode("user"));
+            u3.setPassword(passwordEncoder.encode("user3"));
+            u3.setRole("USER");
             u3.setBalance(20f);
             utilisateurRepository.save(u3);
 

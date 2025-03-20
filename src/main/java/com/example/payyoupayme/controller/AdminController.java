@@ -1,16 +1,15 @@
 package com.example.payyoupayme.controller;
 
+import com.example.payyoupayme.model.Utilisateur;
 import com.example.payyoupayme.service.MessageService;
 import com.example.payyoupayme.service.TransactionService;
 import com.example.payyoupayme.service.UtilisateurService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin/")
@@ -19,11 +18,13 @@ public class AdminController {
     private final UtilisateurService utilisateurService;
     private final TransactionService transactionService;
     private final MessageService messageService;
+    private final PasswordEncoder passwordEncoder;
 
-    public AdminController(UtilisateurService utilisateurService, TransactionService transactionService, MessageService messageService) {
+    public AdminController(UtilisateurService utilisateurService, TransactionService transactionService, MessageService messageService, PasswordEncoder passwordEncoder) {
         this.utilisateurService = utilisateurService;
         this.transactionService = transactionService;
         this.messageService = messageService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping()
@@ -48,4 +49,19 @@ public class AdminController {
 
         return "alldata";
     }
+
+    @GetMapping("/signup")
+    public String showSignupForm(Model model) {
+        model.addAttribute("user", new Utilisateur());
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String processSignup(@ModelAttribute Utilisateur user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // Hacher le mot de passe
+        user.setRole("USER"); // Rôle par défaut
+        utilisateurService.createUtilisateur(user);
+        return "redirect:/login"; // Rediriger vers la page de connexion
+    }
+
 }
