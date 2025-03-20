@@ -23,9 +23,21 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
-    public void addMessage(String content, String username) {
-        Utilisateur user = utilisateurService.getUserByUsername(username);
-        Message message = new Message(content, LocalDate.now(), user);
+    public List<Message> getMessageFromCurrentUser() {
+        return utilisateurService.getCurrentUser().getMessageSent();
+    }
+
+    public void addMessage(String content) {
+        Utilisateur user = utilisateurService.getCurrentUser();
+        Message message = new Message(content, LocalDate.now(), null, user);
         messageRepository.save(message);
+    }
+
+    public void replyToMessage(String messageReply, int messageId) {
+        Message messageSend = messageRepository.findById(messageId).orElse(null);
+        if (messageSend != null){
+            messageSend.setResponse(messageReply);
+            messageRepository.save(messageSend);
+        }
     }
 }

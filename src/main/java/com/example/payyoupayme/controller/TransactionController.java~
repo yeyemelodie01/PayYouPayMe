@@ -33,7 +33,7 @@ public class TransactionController {
 
     @PostMapping("/createtransaction")
     public String createTransaction(Model model, @RequestParam Float amount, @RequestParam String message, @RequestParam String receiver) {
-        Utilisateur userConnected = utilisateurService.getCurrentUser();
+
 
         if( amount > userConnected.getBalance() && amount < 0){
             model.addAttribute("error", "Vous n'avez pas assez d'argent");
@@ -42,7 +42,14 @@ public class TransactionController {
 
             return "transaction";
         }
+        Float amountTotal = userConnected.getBalance() - amount;
+        Float amountReceiver = userReceiver.getBalance() + amount;
 
+        userReceiver.setBalance(amountReceiver);
+        userConnected.setBalance(amountTotal);
+
+        utilisateurService.updateCurrentUser(userReceiver);
+        utilisateurService.updateCurrentUser(userConnected);
         transactionService.createTransaction(amount, message, receiver);
 
         model.addAttribute("transactions", transactionService.getAllTransaction());

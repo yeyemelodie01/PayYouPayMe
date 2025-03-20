@@ -25,9 +25,24 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public void addTransaction(Float amount, String message, Utilisateur userConnected, Utilisateur userReceiver) {
-        Transaction transaction = new Transaction(amount, message, LocalDate.now(), userConnected, userReceiver);
-        transactionRepository.save(transaction);
+    public void createTransaction(Float amount, String message, String username) {
+        Utilisateur sender = utilisateurService.getCurrentUser();
+        Utilisateur receiver = utilisateurService.getUserByUsername(username);
+
+        if(sender.getBalance() > amount && amount > 0 && receiver!=null) {
+            Transaction transactionToCreate = new Transaction();
+            transactionToCreate.setAmount(amount);
+            transactionToCreate.setDate(LocalDate.now());
+            transactionToCreate.setMessageContent(message);
+            transactionToCreate.setReceiver(receiver);
+            transactionToCreate.setSender(sender);
+
+            transactionRepository.save(transactionToCreate);
+            receiver.setBalance(receiver.getBalance()+amount);
+            sender.setBalance(sender.getBalance()-amount);
+            utilisateurService.updateCurrentUser(receiver);
+            utilisateurService.updateCurrentUser(sender);
+        }
     }
 
 

@@ -66,15 +66,15 @@ public class DataInitializer {
             t2.setReceiver(u1);
             transactionRepository.save(t2);
 
-            Message m1 = new Message("message 1", LocalDate.now(), null);
+            Message m1 = new Message("message 1", LocalDate.now(), "reponse message 1");
             m1.setUtilisateur(u1);
             messageRepository.save(m1);
 
-            Message m2 = new Message("message 2", LocalDate.now(), null);
+            Message m2 = new Message("message 2", LocalDate.now(), "reponse message 2");
             m2.setUtilisateur(u2);
             messageRepository.save(m2);
 
-            Message m3 = new Message("message 3", LocalDate.now(), null);
+            Message m3 = new Message("message 3", LocalDate.now(), "reponse message 3");
             m3.setUtilisateur(u3);
             messageRepository.save(m3);
         };

@@ -32,7 +32,7 @@
             <form th:action="@{/transaction/add}" method="POST">
                 <label for="receiver">Receiver:</label>
                 <select name="receiver" id="receiver">
-                    <option th:each="utilisateur : ${userConnected.contact}" th:value="${utilisateur.id}" th:text="${utilisateur.firstName}"></option>
+                    <option th:each="utilisateur : ${userConnected.contact}" th:value="${utilisateur.username}" th:text="${utilisateur.firstName}"></option>
                 </select>
                 <label for="amount">Amount:</label>
                 <input type="number" name="amount" id="amount" placeholder="Entrez le montant de la transaction"/>

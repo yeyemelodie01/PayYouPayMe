@@ -21,17 +21,21 @@ public class Message {
 
     private LocalDate date;
 
+    private String response;
+
     @ManyToOne
     private Utilisateur utilisateur;
 
-    public Message(String content, LocalDate date, Utilisateur utilisateur) {
+    public Message(String content, LocalDate date, String response, Utilisateur utilisateur) {
         this.content = content;
         this.date = date;
+        this.response = response;
         this.utilisateur = utilisateur;
     }
 
-    public Message(String content, LocalDate date) {
+    public Message(String content, LocalDate date, String response) {
         this.content = content;
         this.date = date;
+        this.response = response;
     }
 }

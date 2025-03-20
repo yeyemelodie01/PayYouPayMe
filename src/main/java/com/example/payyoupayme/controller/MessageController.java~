@@ -23,19 +23,15 @@ public class MessageController {
 
     @GetMapping()
     public String getMessage(Model model) {
-        model.addAttribute("messages", messageService.getAllMessage());
-        model.addAttribute("userConnected", utilisateurService.getCurrentUser());
-        
+        model.addAttribute("messages", utilisateurService.getCurrentUser().getMessageSent());
+
         return "message";
     }
 
     @PostMapping("/sendMessage")
-    public String sendMessage(Model model,
-                              @RequestParam String content,
-                              @RequestParam String username) {
-        messageService.addMessage(content, username);
-        model.addAttribute("messages", messageService.getAllMessage());
-        model.addAttribute("userConnected", utilisateurService.getCurrentUser());
+    public String sendMessage(Model model, @RequestParam String content) {
+        messageService.addMessage(content);
+        model.addAttribute("messages", utilisateurService.getCurrentUser().getMessageSent());
 
         return "message";
     }
