@@ -30,7 +30,7 @@
         </div>
 
 
-        <h2 class="text-2xl font-bold text-center mb-4">Tout les messages</h2>
+        <h2 class="text-2xl font-bold text-center mb-4">Tous les messages</h2>
         <div class="flex justify-center">
             <table class="border-collapse border border-gray-400">
                 <tr>
@@ -54,6 +54,53 @@
                         </form>
                         </span>
                         <span th:unless="${message.response == null}" th:text="${message.response}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="text-2xl font-bold text-center mb-4">Tous les utilisateurs</h2>
+        <div class="flex justify-center mb-6">
+            <table class="border-collapse border border-gray-400">
+                <tr>
+                    <th class="border border-gray-300 p-4">Id</th>
+                    <th class="border border-gray-300 p-4">Username</th>
+                    <th class="border border-gray-300 p-4">Lastname</th>
+                    <th class="border border-gray-300 p-4">Firstname</th>
+                    <th class="border border-gray-300 p-4">email</th>
+                    <th class="border border-gray-300 p-4">iban</th>
+                    <th class="border border-gray-300 p-4">balance</th>
+                    <th class="border border-gray-300 p-4">message sent</th>
+                    <th class="border border-gray-300 p-4">Transaction sent</th>
+                    <th class="border border-gray-300 p-4">Transaction receive</th>
+                    <th class="border border-gray-300 p-4">Active</th>
+                </tr>
+                <tr th:each="utilisateur : ${utilisateurs}" class="border border-gray-300 p-4">
+                    <td th:text="${utilisateur.id}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${utilisateur.username}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${utilisateur.lastName}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${utilisateur.firstName}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${utilisateur.email}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${utilisateur.iban}" class="border border-gray-300 p-4"></td>
+                    <td th:text="${utilisateur.balance}" class="border border-gray-300 p-4"></td>
+                    <td class="border border-gray-300 p-4">
+                        <span th:each="message : ${utilisateur.messageSent}">
+                                <span th:text="${message.content}"></span>
+                        </span>
+                    </td>
+                    <td class="border border-gray-300 p-4">
+                        <span th:each="transaction : ${utilisateur.transactionSent}">
+                                <span th:text="${transaction.amount}"></span>
+                        </span>
+                    </td>
+                    <td class="border border-gray-300 p-4">
+                        <span th:each="transaction : ${utilisateur.transactionReceived}">
+                                <span th:text="${transaction.amount}"></span>
+                        </span>
+                    </td>
+                    <td class="border border-gray-300 p-4">
+                        <span th:if="${utilisateur.active} == true" th:text="${utilisateur.active}" class="text-green-500"></span>
+                        <span th:unless="${utilisateur.active} == true" th:text="${utilisateur.active}" class="text-red-500"></span>
                     </td>
                 </tr>
             </table>

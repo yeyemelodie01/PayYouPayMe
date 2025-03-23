@@ -6,6 +6,7 @@ import com.example.payyoupayme.service.TransactionService;
 import com.example.payyoupayme.service.UtilisateurService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +63,16 @@ public class AdminController {
         user.setRole("USER"); // Rôle par défaut
         utilisateurService.createUtilisateur(user);
         return "redirect:/login"; // Rediriger vers la page de connexion
+    }
+
+    @PostMapping("/desactiveruser")
+    public String desactiverUser(Model model, @RequestParam int id) {
+        utilisateurService.disableCurrentUser(id);
+
+        model.addAttribute("messages", messageService.getAllMessage());
+        model.addAttribute("transactions", transactionService.getAllTransaction());
+        model.addAttribute("utilisateurs", utilisateurService.getAllUtilisateur());
+        return "alldatas";
     }
 
 }

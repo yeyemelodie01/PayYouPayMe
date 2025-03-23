@@ -82,4 +82,19 @@ public class UtilisateurService {
     public void createUtilisateur(Utilisateur user) {
         utilisateurRepository.save(user);
     }
+
+    public void disableCurrentUser() {
+        Utilisateur currentUser = getCurrentUser();
+        currentUser.setActive(false);
+        currentUser.setRole("SUSPENDU");
+        utilisateurRepository.save(currentUser);
+    }
+
+    public void disableCurrentUser(int id) {
+        Utilisateur utilisateurToSuspendre = utilisateurRepository.findById(id).get();
+        utilisateurToSuspendre.setActive(false);
+        utilisateurToSuspendre.setRole("SUSPENDU");
+        utilisateurRepository.save(utilisateurToSuspendre);
+
+    }
 }

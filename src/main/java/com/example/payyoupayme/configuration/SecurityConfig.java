@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -20,13 +19,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/admin/**").hasRole("ADMIN");
-            //auth.requestMatchers("/user").hasAnyRole("ADMIN", "USER");
-            auth.requestMatchers("/signup", "/", "/login", "/h2-console/**").permitAll();
-            auth.anyRequest().authenticated();
-        }).formLogin(Customizer.withDefaults()).build();
+        return http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**") // Désactiver CSRF pour H2
+                )
+                .headers(headers -> headers
+                        .frameOptions(frameOptions -> frameOptions.sameOrigin()) // Permettre l'affichage dans un iframe (nécessaire pour H2)
+                )
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                    auth.requestMatchers("/contact/**", "/message/**", "/me/user/**", "/transaction/**", "/transfer/**").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers("/signup", "/", "/login").permitAll();
+                    auth.anyRequest().authenticated();
+                })
+                .formLogin(Customizer.withDefaults())
+                .build();
     }
+
 
    /* @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

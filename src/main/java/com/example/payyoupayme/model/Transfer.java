@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactExterne {
+public class Transfer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,12 +21,15 @@ public class TransactExterne {
 
     private String iban;
 
+    private LocalDate date;
+
     @ManyToOne
     private Utilisateur utilisateur;
 
-    public TransactExterne(Float amount, String iban, Utilisateur utilisateur) {
+    public Transfer(Float amount, String iban, LocalDate date, Utilisateur utilisateur) {
         this.amount = amount;
         this.iban = iban;
+        this.date = date;
         this.utilisateur = utilisateur;
     }
 

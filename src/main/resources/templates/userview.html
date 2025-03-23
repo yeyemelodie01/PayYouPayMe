@@ -105,11 +105,9 @@
         <input type="submit" value="Modify"/>
     </form>
 
-<h3>Ajouter de l'argent</h3>
-<p th:text="${userToDisplay.balance}"></p>
-    <form th:action="@{/me/user/addBalance}" method="POST">
-        <input type="text" name="amount"/>
-        <input type="submit" value="Add"/>
+    <form th:action="@{/me/user/enable}" method="post">
+        <input type="submit" value="Supprimer mon compte" />
     </form>
+
 </body>
 </html>
