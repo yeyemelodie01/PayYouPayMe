@@ -36,6 +36,7 @@ public class Utilisateur {
     private String role;
 
     private boolean isActive = true;
+    private boolean isBlocked = true;
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Transaction> transactionSent = new ArrayList<Transaction>();
@@ -52,7 +53,7 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur", fetch = FetchType.LAZY)
     private List<Transfer> transfer = new ArrayList<Transfer>();
 
-    public Utilisateur(String username, String lastName, String firstName, String email, String iban, Float balance, String login, String password, String role, boolean isActive, List<Transaction> transactionSent, List<Transaction> transactionReceived, List<Message> messageSent, List<Utilisateur> contact, List<Transfer> transfer) {
+    public Utilisateur(String username, String lastName, String firstName, String email, String iban, Float balance, String login, String password, String role, boolean isActive, boolean isBlocked, List<Transaction> transactionSent, List<Transaction> transactionReceived, List<Message> messageSent, List<Utilisateur> contact, List<Transfer> transfer) {
         this.username = username;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -63,6 +64,7 @@ public class Utilisateur {
         this.password = password;
         this.role = role;
         this.isActive = isActive;
+        this.isBlocked = isBlocked;
         this.transactionSent = transactionSent;
         this.transactionReceived = transactionReceived;
         this.messageSent = messageSent;

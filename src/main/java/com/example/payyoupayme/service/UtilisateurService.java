@@ -97,4 +97,10 @@ public class UtilisateurService {
         utilisateurRepository.save(utilisateurToSuspendre);
 
     }
+
+    public void confirmUser(int id) {
+        Utilisateur utilisateurToConfirm = utilisateurRepository.findById(id).get();
+        utilisateurToConfirm.setBlocked(false);
+        utilisateurRepository.save(utilisateurToConfirm);
+    }
 }

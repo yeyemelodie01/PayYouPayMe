@@ -65,42 +65,33 @@
                 <tr>
                     <th class="border border-gray-300 p-4">Id</th>
                     <th class="border border-gray-300 p-4">Username</th>
-                    <th class="border border-gray-300 p-4">Lastname</th>
-                    <th class="border border-gray-300 p-4">Firstname</th>
-                    <th class="border border-gray-300 p-4">email</th>
-                    <th class="border border-gray-300 p-4">iban</th>
                     <th class="border border-gray-300 p-4">balance</th>
-                    <th class="border border-gray-300 p-4">message sent</th>
-                    <th class="border border-gray-300 p-4">Transaction sent</th>
-                    <th class="border border-gray-300 p-4">Transaction receive</th>
                     <th class="border border-gray-300 p-4">Active</th>
+                    <th class="border border-gray-300 p-4">Confirmer</th>
                 </tr>
                 <tr th:each="utilisateur : ${utilisateurs}" class="border border-gray-300 p-4">
                     <td th:text="${utilisateur.id}" class="border border-gray-300 p-4"></td>
                     <td th:text="${utilisateur.username}" class="border border-gray-300 p-4"></td>
-                    <td th:text="${utilisateur.lastName}" class="border border-gray-300 p-4"></td>
-                    <td th:text="${utilisateur.firstName}" class="border border-gray-300 p-4"></td>
-                    <td th:text="${utilisateur.email}" class="border border-gray-300 p-4"></td>
-                    <td th:text="${utilisateur.iban}" class="border border-gray-300 p-4"></td>
                     <td th:text="${utilisateur.balance}" class="border border-gray-300 p-4"></td>
                     <td class="border border-gray-300 p-4">
-                        <span th:each="message : ${utilisateur.messageSent}">
-                                <span th:text="${message.content}"></span>
+                        <span th:if="${utilisateur.active}">
+                            <form th:action="@{'/admin/desactiveruser?id=' + ${utilisateur.id}}" method="POST">
+                                <input type="submit" value="desactiver" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                            </form>
+			            </span>
+                        <span th:unless="${utilisateur.active}">
+                            Oui
                         </span>
                     </td>
-                    <td class="border border-gray-300 p-4">
-                        <span th:each="transaction : ${utilisateur.transactionSent}">
-                                <span th:text="${transaction.amount}"></span>
+                    <td class="border border-gray-300 p-4 flex justify-center">
+                        <span th:if="${utilisateur.blocked}" >
+                            <form th:action="@{'/admin/confirmuser?id=' + ${utilisateur.id}}" method="POST">
+                                <input type="submit" value="Confirmer" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                            </form>
+			            </span>
+                        <span th:unless="${utilisateur.blocked}">
+                            Oui
                         </span>
-                    </td>
-                    <td class="border border-gray-300 p-4">
-                        <span th:each="transaction : ${utilisateur.transactionReceived}">
-                                <span th:text="${transaction.amount}"></span>
-                        </span>
-                    </td>
-                    <td class="border border-gray-300 p-4">
-                        <span th:if="${utilisateur.active} == true" th:text="${utilisateur.active}" class="text-green-500"></span>
-                        <span th:unless="${utilisateur.active} == true" th:text="${utilisateur.active}" class="text-red-500"></span>
                     </td>
                 </tr>
             </table>

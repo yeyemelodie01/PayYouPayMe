@@ -7,5 +7,11 @@
 <body>
   <header th:replace="fragments/menu :: header"></header>
   <h1 class="text-3xl font-bold text-center">Bienvenue sur l'application PayYouPayMe</h1>
+
+  <form th:action="@{/signup}" method="POST">
+    <input type="text" name="username" class="w-48 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+    <input type="password" name="password" class="w-48 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+    <input type="submit" value="Sign up" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"/>
+  </form>
 </body>
 </html>
